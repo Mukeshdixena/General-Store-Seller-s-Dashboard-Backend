@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 const sequelize = require('../util/database');
 
 const StoreItem = sequelize.define(
-    'storeItem',
+    'StoreItem',
     {
         id: {
             type: Sequelize.INTEGER,

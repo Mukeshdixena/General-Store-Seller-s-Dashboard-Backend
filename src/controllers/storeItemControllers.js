@@ -12,13 +12,12 @@ exports.getStoreItem = (req, res, next) => {
 };
 
 exports.postStoreItem = (req, res, next) => {
-    const { name, description, quantity, price } = req.body;  // Added price
+    const { name, description, quantity } = req.body;  // Added price
 
     StoreItem.create({
         name: name,
         description: description,
         quantity: quantity,
-        price: price,  // Added price to creation
     })
         .then(result => {
             res.status(201).json({ message: 'StoreItem created successfully!', data: result });
@@ -31,6 +30,7 @@ exports.postStoreItem = (req, res, next) => {
 
 exports.deleteStoreItem = (req, res, next) => {
     const { id } = req.params;
+    console.log(id)
 
     StoreItem.findByPk(id)
         .then(storeItem => {
@@ -50,14 +50,14 @@ exports.deleteStoreItem = (req, res, next) => {
 
 exports.updateStoreItem = (req, res, next) => {
     const { id } = req.params;
-    const { name, price, description, quantity } = req.body;  // Added quantity
+    const { name, description, quantity } = req.body;
 
     StoreItem.findByPk(id)
         .then(storeItem => {
             if (!storeItem) {
                 return res.status(404).json({ message: 'StoreItem not found!' });
             }
-            return storeItem.update({ name, price, description, quantity });  // Updated fields
+            return storeItem.update({ name, description, quantity });  // Updated fields
         })
         .then(updatedItem => {
             res.status(200).json({ message: 'StoreItem updated successfully!', data: updatedItem });
