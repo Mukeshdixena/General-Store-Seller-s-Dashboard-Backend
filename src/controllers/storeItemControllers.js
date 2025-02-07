@@ -3,7 +3,7 @@ const StoreItem = require('../models/storeItem');
 exports.getStoreItem = (req, res, next) => {
     StoreItem.findAll()
         .then(storeItems => {
-            res.status(200).json({ message: 'Fetched StoreItems successfully!', data: storeItems });
+            res.status(200).json(storeItems);
         })
         .catch(err => {
             console.error(err);
@@ -20,7 +20,7 @@ exports.postStoreItem = (req, res, next) => {
         quantity: quantity,
     })
         .then(result => {
-            res.status(201).json({ message: 'StoreItem created successfully!', data: result });
+            res.status(201).json(result);
         })
         .catch(err => {
             console.error(err);
@@ -29,10 +29,10 @@ exports.postStoreItem = (req, res, next) => {
 };
 
 exports.deleteStoreItem = (req, res, next) => {
-    const { id } = req.params;
-    console.log(id)
+    const { storeItemId } = req.params;
+    console.log(storeItemId)
 
-    StoreItem.findByPk(id)
+    StoreItem.findByPk(storeItemId)
         .then(storeItem => {
             if (!storeItem) {
                 return res.status(404).json({ message: 'StoreItem not found!' });
@@ -49,10 +49,10 @@ exports.deleteStoreItem = (req, res, next) => {
 };
 
 exports.updateStoreItem = (req, res, next) => {
-    const { id } = req.params;
+    const { storeItemId } = req.params;
     const { name, description, quantity } = req.body;
 
-    StoreItem.findByPk(id)
+    StoreItem.findByPk(storeItemId)
         .then(storeItem => {
             if (!storeItem) {
                 return res.status(404).json({ message: 'StoreItem not found!' });
